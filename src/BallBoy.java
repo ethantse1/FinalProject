@@ -21,13 +21,16 @@ public class BallBoy {
         y = yy;
     }
     public void drawB(Graphics2D g2){
+
         g2.fillRect(x,y,radius,radius);
     }
     public Point getCenter(){
+
         return new Point(x+radius, y+radius);
     }
 
     public Point getLoc() {
+
         return new Point(x,y);
     }
     public void moveY(int yy){
@@ -41,9 +44,11 @@ public class BallBoy {
 
     }
     public Rectangle getC(){
+
         return Rect;
     }
     public int getRadius(){
+
         return radius;
     }
 }

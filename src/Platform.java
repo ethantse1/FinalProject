@@ -9,9 +9,12 @@ public class Platform {
 
     }
     public Rectangle getR(){
+
         return r;
     }
     public void drawR(Graphics2D g2){
+        //Color a = new Color(255,204,51);
+        //g2.setColor(a);
         g2.fill(r);
     }
 }
