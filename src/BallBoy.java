@@ -1,0 +1,50 @@
+//import javafx.scene.shape.Circle;
+
+import javax.sound.sampled.Line;
+import java.awt.*;
+import java.awt.geom.Area;
+
+
+
+
+public class BallBoy {
+
+
+    private int x,y,radius;
+    private Rectangle Rect;
+
+
+    public BallBoy(int xx, int yy, int rad) {
+        Rect = new Rectangle(xx,yy,rad, rad);
+        radius = rad;
+        x = xx;
+        y = yy;
+    }
+    public void drawB(Graphics2D g2){
+        g2.fillRect(x,y,radius,radius);
+    }
+    public Point getCenter(){
+        return new Point(x+radius, y+radius);
+    }
+
+    public Point getLoc() {
+        return new Point(x,y);
+    }
+    public void moveY(int yy){
+        y -= yy;
+        Rect = new Rectangle(x,y,radius, radius);
+
+    }
+    public void moveX(int xx){
+        x += xx;
+        Rect = new Rectangle(x,y,radius, radius);
+
+    }
+    public Rectangle getC(){
+        return Rect;
+    }
+    public int getRadius(){
+        return radius;
+    }
+}
+
