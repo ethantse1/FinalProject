@@ -28,6 +28,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
     public BallMain() {
         timer = new Timer(4, this);
         bb = new BallBoy(100,450, 20);
+        bb.setSpawn(100,450);
         timer.start();
         addKeyListener(this);
         plat = new ArrayList<Platform>();
@@ -39,7 +40,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         plat.add(new Platform(0,400,300,40, false));
         plat.add(new Platform(500,300,40,100, false));
         plat.add(new Platform(700,200,40,100, false));
-        plat.add(new Platform(900,150,40,100, false));
+        plat.add(new Platform(900,150,40,100, true));
 
 
 
@@ -72,7 +73,11 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             br.translate(0,-2);
             tl.translate(0,2);
             tr.translate(0,2);
-
+            if (bb.getC().intersects(p.getR()) && p.getKill()){
+                bb.spawn();
+                repaint();
+                break;
+            }
             if (p.getR().getBounds2D().contains(tr) || p.getR().getBounds2D().contains(br)) {
                 touchR = true;
             }
@@ -87,6 +92,11 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             br.translate(-1,0);
 
             if (p.getR().getBounds2D().contains(bl) || p.getR().getBounds2D().contains(br)) {
+                if (p.getKill()) {
+                    bb.spawn();
+                    repaint();
+                    break;
+                }
                 touchB = true;
                 //System.out.println(bl.x);
             }

@@ -12,7 +12,15 @@ public class Platform {
         return r;
     }
     public void drawR(Graphics2D g2){
+        if (kill){
+            g2.setColor(Color.RED);
+        }else{
+            g2.setColor(Color.BLACK);
+        }
         g2.fill(r);
+    }
+    public boolean getKill(){
+        return kill;
     }
 }
 
