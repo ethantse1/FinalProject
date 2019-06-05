@@ -40,7 +40,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         plat.add(new Platform(0,500,1000,100, false));
         plat.add(new Platform(0,400,300,40, false));
         plat.add(new Platform(500,300,40,1000, false));
-        plat.add(new Platform(700,200,40,1000, false));
+        plat.add(new Platform(698,200,40,1000, false));
         plat.add(new Platform(900,150,40,1000, true));
 
 
