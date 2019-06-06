@@ -28,8 +28,8 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
     public static final int FRAMEWIDTH = 1000, FRAMEHEIGHT = 600;
     public BallMain() {
         timer = new Timer(1000/60, this);
-        bb = new BallBoy(100,450, 20);
-        bb.setSpawn(100,450);
+        bb = new BallBoy(50,300, 20);
+        bb.setSpawn(50,300);
         timer.start();
         addKeyListener(this);
         plat = new ArrayList<Platform>();
@@ -37,10 +37,14 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
     }
     public void levelOne(){
         plat.clear();
-        plat.add(new Platform(0,500,1000,100, false));
-        plat.add(new Platform(0,400,300,40, false));
+        plat.add(new Platform(0,550,1000,100, false));
+//        plat.add(new Platform(0,400,299,40, false));
+//        plat.add(new Platform(400,0,40,370, true));
+//        plat.add(new Platform(500,480,100,40, false));
+
+
         plat.add(new Platform(500,300,40,1000, false));
-        plat.add(new Platform(698,200,40,1000, false));
+        plat.add(new Platform(700,200,40,1000, false));
         plat.add(new Platform(900,150,40,1000, true));
 
 
@@ -106,6 +110,12 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
 //            }
 //        }
         for (Platform p : plat) {
+            if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius()-2, bb.getLoc().y+3)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius()-2, bb.getLoc().y + bb.getRadius()-3))) {
+                bb.moveX(-1);
+            }
+            if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x+2, bb.getLoc().y + bb.getRadius()-3)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x+2, bb.getLoc().y+3))) {
+                bb.moveX(1);
+            }
             for (int i = 0; i < gravity - jumpHeight; i++) {
                 if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius() - 2, bb.getLoc().y-2)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x + 2, bb.getLoc().y-2))) {
                     bb.moveY(-1);
@@ -118,11 +128,11 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
                     //System.out.println(i);
                     jumps = 2;
                     jumped = false;
+                    touchB = true;
                 }
             }
         }
         for (Platform p : plat) {
-
             bl.translate(0, -2);
             br.translate(0, -2);
             tl.translate(0, 2);
@@ -130,13 +140,12 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             if (bb.getC().intersects(p.getR()) && p.getKill()) {
                 bb.spawn();
                 jumps = 2;
-                repaint();
                 break;
             }
             if (p.getR().getBounds2D().contains(tr) || p.getR().getBounds2D().contains(br)) {
                 touchR = true;
             }
-            if (p.getR().getBounds2D().contains(tl) || p.getR().getBounds2D().contains(bl)) {
+            if (p.getR().getBounds2D().contains(bl) || p.getR().getBounds2D().contains(tl)) {
                 touchL = true;
             }
             tl.translate(0, -2);
@@ -149,22 +158,25 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             if (p.getR().getBounds2D().contains(bl) || p.getR().getBounds2D().contains(br)) {
                 if (p.getKill()) {
                     bb.spawn();
-                    repaint();
                     break;
                 }
                 touchB = true;
+                System.out.println(bb.getLoc().x);
                 bb.ground();
 
                 //System.out.println(bl.x);
             } else {
                 bb.Fground();
             }
+            if (p.getR().getBounds2D().intersects(bb.getC()) && p.getKill()){
+                bb.spawn();
+            }
             bl.translate(0, 1);
             br.translate(0, 1);
 
             tl.translate(1, 0);
             tr.translate(-1, 0);
-
+//
             if (p.getR().getBounds2D().contains(tr) || p.getR().getBounds2D().contains(tl)) {
                 touchT = true;
             }
@@ -180,7 +192,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
 
 
             if (!touchB) {
-                if (gravity < jumpHeight + 13) {
+                if (gravity < jumpHeight + 12) {
                     gravity++;
                     if (gravity > jumpHeight+1){
                         jumped = false;
@@ -201,7 +213,6 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
                     bb.moveY(jumpHeight);
                 }
             }
-
             repaint();
         }
 
@@ -218,7 +229,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             bb.moveY(1);
             jumping++;
             jumps--;
-            repaint();
+            //repaint();
         }else{
             if (touchB){
                 jumps = 2;
