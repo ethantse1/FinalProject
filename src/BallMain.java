@@ -37,13 +37,16 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
     }
     public void levelOne(){
         plat.clear();
-        plat.add(new Platform(0,500,1000,100, false));
-//        plat.add(new Platform(0,400,299,40, false));
-//        plat.add(new Platform(400,0,40,370, true));
-//        plat.add(new Platform(500,480,100,40, false));
+        plat.add(new Platform(0,550,1000,100, false));
+//        plat.add(new Platform(0,400,300,40, false));
+//        plat.add(new Platform(500,300,40,100, false));
+//        plat.add(new Platform(700,200,40,100, false));
+//        plat.add(new Platform(900,150,40,100, true));
+        plat.add(new Platform(850,150,40,20,false, true));
+        plat.add(new Platform(950,150,40,20,false,true));
 
 
-        plat.add(new Platform(498,300,40,1000, false));
+        plat.add(new Platform(500,300,40,1000, false));
         plat.add(new Platform(700,200,40,1000, false));
         plat.add(new Platform(900,150,40,1000, true));
 
@@ -148,12 +151,17 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             if (p.getR().getBounds2D().contains(bl) || p.getR().getBounds2D().contains(tl)) {
                 touchL = true;
             }
-            tl.translate(0, -2);
-            tr.translate(0, -2);
-            bl.translate(0, 1);
-            br.translate(0, 1);
-            bl.translate(1, 0);
-            br.translate(-1, 0);
+            if (bb.getC().intersects(p.getR()) && p.isDisappear()){
+                plat.remove(p);
+                repaint();
+                break;
+            }
+            tl.translate(0,-2);
+            tr.translate(0,-2);
+            bl.translate(0,1);
+            br.translate(0,1);
+            bl.translate(1,0);
+            br.translate(-1,0);
 
             if (p.getR().getBounds2D().contains(bl) || p.getR().getBounds2D().contains(br)) {
                 if (p.getKill()) {
@@ -162,14 +170,20 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
                 }
                 touchB = true;
                 System.out.println(bb.getLoc().x);
-                bb.ground();
+                //bb.ground();
 
                 //System.out.println(bl.x);
             } else {
-                bb.Fground();
+                //bb.Fground();
             }
-            if (p.getR().getBounds2D().intersects(bb.getC()) && p.getKill()){
-                bb.spawn();
+            if (p.getR().getBounds2D().contains(bl) || p.getR().getBounds2D().contains(br)) {
+                if (p.isDisappear()) {
+                    plat.remove(p);
+                    repaint();
+                    break;
+                }
+                touchB = true;
+                //System.out.println(bl.x);
             }
             bl.translate(0, 1);
             br.translate(0, 1);
