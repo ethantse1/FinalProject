@@ -12,6 +12,7 @@ public class BallBoy {
 
     private int x,y,radius;
     private Rectangle Rect;
+    private Point spawn;
 
 
     public BallBoy(int xx, int yy, int rad) {
@@ -19,6 +20,7 @@ public class BallBoy {
         radius = rad;
         x = xx;
         y = yy;
+        spawn = new Point(0,0);
     }
     public void drawB(Graphics2D g2){
 
@@ -50,6 +52,13 @@ public class BallBoy {
     public int getRadius(){
 
         return radius;
+    }
+    public void spawn(){
+        x = spawn.x;
+        y = spawn.y;
+    }
+    public void setSpawn(int xx, int yy){
+        spawn.setLocation(xx,yy);
     }
 }
 
