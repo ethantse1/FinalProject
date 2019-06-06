@@ -10,9 +10,10 @@ import java.awt.geom.Area;
 public class BallBoy {
 
 
-    private int x,y,radius;
+    private int x,y,radius, vy;
     private Rectangle Rect;
     private Point spawn;
+    private boolean isGrounded;
 
 
     public BallBoy(int xx, int yy, int rad) {
@@ -20,6 +21,7 @@ public class BallBoy {
         radius = rad;
         x = xx;
         y = yy;
+        vy = 0;
         spawn = new Point(0,0);
     }
     public void drawB(Graphics2D g2){
@@ -59,6 +61,12 @@ public class BallBoy {
     }
     public void setSpawn(int xx, int yy){
         spawn.setLocation(xx,yy);
+    }
+    public void ground(){
+        isGrounded = true;
+    }
+    public void Fground(){
+        isGrounded = false;
     }
 }
 
