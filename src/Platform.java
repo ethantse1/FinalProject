@@ -79,4 +79,3 @@ public class Platform {
         return ground;
     }
 }
-
