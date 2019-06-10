@@ -38,12 +38,12 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
     public void levelOne(){
         plat.clear();
         plat.add(new Platform(0,550,1000,100, false));
-//        plat.add(new Platform(0,400,300,40, false));
+        plat.add(new Platform(0,400,300,40, false));
 //        plat.add(new Platform(500,300,40,100, false));
 //        plat.add(new Platform(700,200,40,100, false));
 //        plat.add(new Platform(900,150,40,100, true));
-        plat.add(new Platform(850,150,40,20,false, true));
-        plat.add(new Platform(950,150,40,20,false,true));
+        plat.add(new Platform(850,150,40,30,false, true));
+        plat.add(new Platform(950,150,40,30,false,true));
 
 
         plat.add(new Platform(500,300,40,1000, false));
@@ -63,72 +63,144 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         }
     }
     public void actionPerformed(ActionEvent e) {
-        bb.moveY(-gravity);
-        if (left) {
-            if (bb.getLoc().x <= 0 || touchL) {
-            } else {
-                bb.moveX(-3);
+        Point tr = new Point(bb.getLoc().x + bb.getRadius(), bb.getLoc().y);
+        Point tl = new Point(bb.getLoc().x, bb.getLoc().y);
+        tl.translate(1, 0);
+        tr.translate(-1, 0);
+////////
+        for (Platform p: plat) {
+            if (p.getR().getBounds2D().contains(tr) || p.getR().getBounds2D().contains(tl)) {
+                touchT = true;
             }
-        }
-        if (right) {
-            if (bb.getLoc().x + bb.getRadius() >= getWidth() || touchR) {
-            } else {
-                bb.moveX(3);
+            bb.moveY(-1);
+            if (bb.getC().intersects(p.getR()) && p.isDisappear()){
+                p.addTime();
+                if (p.getTime()>10) {
+                    plat.remove(p);
+                    break;
+                }
             }
+            bb.moveY(1);
         }
+        //System.out.println(touchT);
 
-        Point bl = new Point(bb.getLoc().x - 1, bb.getLoc().y + bb.getRadius());
-        Point br = new Point(bb.getLoc().x + bb.getRadius() + 1, bb.getLoc().y + bb.getRadius());
-        Point tr = new Point(bb.getLoc().x + bb.getRadius() - 1, bb.getLoc().y);
-        Point tl = new Point(bb.getLoc().x + 1, bb.getLoc().y);
+        tl.translate(-1, 0);
+        tr.translate(1, 0);
+        if (jumping > 0) {
+            if(touchT){
+                 jumping = 0;
+            }else {
+
+                bb.moveY(jumpHeight);
+            }
+
+        }
+        touchT = false;
+        Point bl = new Point(bb.getLoc().x, bb.getLoc().y + bb.getRadius());
+        Point br = new Point(bb.getLoc().x + bb.getRadius(), bb.getLoc().y + bb.getRadius());
 
         touchB = false;
-        touchT = false;
+//        touchT = false;
         touchR = false;
         touchL = false;
-
-//        for (Platform p : plat) {
-//            if (!p.getKill()) {
-//                if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius(), bb.getLoc().y + 1)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius() - 1, bb.getLoc().y + bb.getRadius() - 1))) {
-//                    bb.moveX(-1);
-//                }
-//                if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius() - 1, bb.getLoc().y + 1)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius() - 1, bb.getLoc().y + bb.getRadius() - 1))) {
-//                    bb.moveX(-1);
-//                }
-//                if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius() - 1, bb.getLoc().y + 1)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius() - 1, bb.getLoc().y + bb.getRadius() - 1))) {
-//                    bb.moveX(-1);
-//                }
-//
-//
-//                if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x, bb.getLoc().y + 1)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x, bb.getLoc().y + bb.getRadius() - 1))) {
-//                    bb.moveX(1);
-//                }
-//                if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x, bb.getLoc().y + 1)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x, bb.getLoc().y + bb.getRadius() - 1))) {
-//                    bb.moveX(1);
-//                }
-//                if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x, bb.getLoc().y)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x, bb.getLoc().y + bb.getRadius() - 1))) {
-//                    bb.moveX(1);
-//                }
-//
-//            }
-//        }
-        for (Platform p : plat) {
-            if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius()-1, bb.getLoc().y+3)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius()-1, bb.getLoc().y + bb.getRadius()-3))) {
-                bb.moveX(-1);
-            }
-            if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x+1, bb.getLoc().y + bb.getRadius()-3)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x+1, bb.getLoc().y+3))) {
-                bb.moveX(1);
-            }
-
-
-            for (int i = 0; i < gravity - jumpHeight; i++) {
-                if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius() - 2, bb.getLoc().y-2)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x + 2, bb.getLoc().y-2))) {
-                    bb.moveY(-1);
-                //System.out.println(1);
+        bl = new Point(bb.getLoc().x, bb.getLoc().y + bb.getRadius());
+        br = new Point(bb.getLoc().x + bb.getRadius(), bb.getLoc().y + bb.getRadius());
+        tr = new Point(bb.getLoc().x + bb.getRadius(), bb.getLoc().y);
+        tl = new Point(bb.getLoc().x, bb.getLoc().y);
+        int i = 0;
+        for(Platform p: plat){
+            if (p.getKill() && p.getR().getBounds2D().intersects(bb.getC())){
+                bb.spawn();
             }
         }
+        for (i = 0; i < 3;) {
+            for(Platform p: plat){
+                if (bb.getLoc().x-i<0 || p.getR().contains(new Point(bb.getLoc().x-i, bb.getLoc().y + bb.getRadius()-1)) || p.getR().contains(new Point(bb.getLoc().x-i, bb.getLoc().y+1))){
+                    if (p.getKill()){
+                        i++;
+                    }
+                    touchL = true;
+                    break;
+                }
+            }
+            if (touchL){
+                break;
+            }
+            else{
+                i++;
+            }
+        }
+        int j;
+        for (j = 0; j < 3;) {
+            for (Platform p : plat) {
+                if (bb.getLoc().x + bb.getRadius() + j > getWidth() || p.getR().contains(new Point(bb.getLoc().x + bb.getRadius() + j, bb.getLoc().y + bb.getRadius() - 1)) || p.getR().contains(new Point(bb.getLoc().x + bb.getRadius() + j, bb.getLoc().y + 1))) {
+                    if (p.getKill()){
+                        j++;
+                    }
+                    touchR = true;
+                    break;
+                }
+            }
+            if (touchR) {
+                break;
+            } else {
+                j++;
+            }
+        }
+        if (left) {
 
-            for (int i = 0; i < jumpHeight - gravity; i++) {
+                bb.moveX(-i);
+
+        }
+        if (right) {
+
+                bb.moveX(j);
+
+        }
+        bl = new Point(bb.getLoc().x, bb.getLoc().y + bb.getRadius());
+        br = new Point(bb.getLoc().x + bb.getRadius(), bb.getLoc().y + bb.getRadius());
+        tr = new Point(bb.getLoc().x + bb.getRadius(), bb.getLoc().y);
+        tl = new Point(bb.getLoc().x, bb.getLoc().y);
+        bl.translate(1,0);
+        br.translate(-1,0);
+        for (Platform p: plat){
+            if ((p.getR().getBounds2D().contains(br) || p.getR().getBounds2D().contains(bl)) && !p.getKill()){
+                gravity = 0;
+                jumped = false;
+                jumps = 2;
+                jumping = 0;
+                touchB = true;
+            }
+        }
+        bl.translate(-1,0);
+        br.translate(1,0);
+        if (!touchB){
+            if (gravity < jumpHeight + 12) {
+                gravity++;
+            }
+            bb.moveY(-gravity);
+        }else{
+            gravity = 0;
+        }
+            if (gravity == jumpHeight + 1){
+                jumped = false;
+            }
+
+
+
+
+
+
+
+        for (Platform p : plat) {
+//            for (int ii = 0; ii < gravity - jumpHeight; ii++) {
+//                if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius() - 2, bb.getLoc().y - 2)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x + 2, bb.getLoc().y - 2))) {
+//                    bb.moveY(-1);
+//                    //System.out.println(1);
+//                }
+//            }
+////
+            for (int ii = 0; ii < jumpHeight - gravity; ii++) {
                 if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x + 2, bb.getLoc().y + bb.getRadius() - 1)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius() - 2, bb.getLoc().y + bb.getRadius() - 1))) {
                     bb.moveY(1);
 
@@ -138,92 +210,99 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
                     touchB = true;
                 }
             }
-        }
-        for (Platform p : plat) {
-            bl.translate(0, -2);
-            br.translate(0, -2);
-            tl.translate(0, 2);
-            tr.translate(0, 2);
-            if (bb.getC().intersects(p.getR()) && p.getKill()) {
-                bb.spawn();
-                jumps = 2;
-                break;
-            }
-            if (p.getR().getBounds2D().contains(tr) || p.getR().getBounds2D().contains(br)) {
-                touchR = true;
-            }
-            if (p.getR().getBounds2D().contains(bl) || p.getR().getBounds2D().contains(tl)) {
-                touchL = true;
-            }
-            if (bb.getC().intersects(p.getR()) && p.isDisappear()){
-                plat.remove(p);
-                repaint();
-                break;
-            }
-            tl.translate(0,-2);
-            tr.translate(0,-2);
-            bl.translate(0,1);
-            br.translate(0,1);
-            bl.translate(1,0);
-            br.translate(-1,0);
 
-            if (p.getR().getBounds2D().contains(bl) || p.getR().getBounds2D().contains(br)) {
-                if (p.getKill()) {
-                    bb.spawn();
-                    break;
-                }
-                touchB = true;
-                System.out.println(bb.getLoc().x);
-                //bb.ground();
+//        }
+////        for (Platform p : plat) {
+//            bl.translate(0, -2);
+//            br.translate(0, -2);
+//            tl.translate(0, 2);
+//            tr.translate(0, 2);
+//            if (bb.getC().intersects(p.getR()) && p.getKill()) {
+//                bb.spawn();
+//                jumps = 2;
+//                break;
+//            }
+////            if (p.getR().getBounds2D().contains(tr) || p.getR().getBounds2D().contains(br)) {
+////                touchR = true;
+////            }
+////            if (p.getR().getBounds2D().contains(bl) || p.getR().getBounds2D().contains(tl)) {
+////                touchL = true;
+////            }
 
-                //System.out.println(bl.x);
-            } else {
-                //bb.Fground();
-            }
-            if (p.getR().getBounds2D().contains(bl) || p.getR().getBounds2D().contains(br)) {
-                if (p.isDisappear()) {
-                    plat.remove(p);
-                    repaint();
-                    break;
-                }
-                touchB = true;
-                //System.out.println(bl.x);
-            }
-            bl.translate(0, 1);
-            br.translate(0, 1);
-
-            tl.translate(1, 0);
-            tr.translate(-1, 0);
+//            tl.translate(0,-2);
+//            tr.translate(0,-2);
+//            bl.translate(0,1);
+//            br.translate(0,1);
+//            bl.translate(1,0);
+//            br.translate(-1,0);
+////
+//            if (p.getR().getBounds2D().contains(bl) || p.getR().getBounds2D().contains(br)) {
+//                if (p.getKill()) {
+//                    bb.spawn();
+//                    break;
+//                }
+//                touchB = true;
+//                System.out.println(bb.getLoc().x);
+//                //bb.ground();
 //
-            if (p.getR().getBounds2D().contains(tr) || p.getR().getBounds2D().contains(tl)) {
-                touchT = true;
+//                //System.out.println(bl.x);
+//            } else {
+//                //bb.Fground();
+//            }
+//            if (p.getR().getBounds2D().contains(bl) || p.getR().getBounds2D().contains(br)) {
+//                if (p.isDisappear()) {
+//                    plat.remove(p);
+//                    break;
+//                }
+//                touchB = true;
+//                //System.out.println(bl.x);
+//            }
+//            bl.translate(0, 1);
+//            br.translate(0, 1);
+////
+
+            bl.translate(1, 0);
+            br.translate(-1, 0);
+            if (p.getR().getBounds2D().contains(bl) || p.getR().getBounds2D().contains(br)) {
+                touchB = true;
             }
-            tl.translate(-1, 0);
-            tr.translate(1, 0);
+            bl.translate(-1, 0);
+            br.translate(1, 0);
         }
-            if (!touchB) {
-                if (gravity < jumpHeight + 12) {
-                    gravity++;
-                    if (gravity > jumpHeight+1){
-                        jumped = false;
-                    }
-                }
-            } else {
-                gravity = 0;
-            }
-            if (touchB) {
-                jumps = 2;
-                gravity = 0;
-                jumping = 0;
-            }
-            if (jumping > 0) {
-                if (touchT && !touchB) {
-                    jumping = 0;
-                } else {
-                    bb.moveY(jumpHeight);
-                }
-            }
+////        }
+//            if (!touchB) {
+//                if (gravity < jumpHeight + 12) {
+//                    gravity++;
+//                    if (gravity > jumpHeight+1){
+//                        jumped = false;
+//                    }
+//                }
+//            } else {
+//                gravity = 0;
+//            }
+//            if (touchB) {
+//                jumps = 2;
+//                gravity = 0;
+//                jumping = 0;
+//            }
+//            if (jumping > 0) {
+//                if (touchT && !touchB) {
+//                    jumping = 0;
+//                } else {
+//                    bb.moveY(jumpHeight);
+//                }
+//            }
+//        }
+            if (touchB){
+            jumped = false;
+            jumps = 2;
+        }
+//        System.out.println(jumps);
+//        System.out.println(jumped);
+        //System.out.println(jumping);
+
             repaint();
+
         }
 
     public void keyTyped(KeyEvent e) {
@@ -236,14 +315,14 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         if(key == KeyEvent.VK_UP && jumps>0 && !jumped){
             gravity = 0;
             jumped = true;
-            bb.moveY(1);
-            jumping++;
+            bb.moveY(2);
+            touchB = false;
+            jumping = 1;
             jumps--;
-            //repaint();
+            //System.out.println(jumps);
         }else{
             if (touchB){
                 jumps = 2;
-                System.out.println(jumps);
             }
         }
         if(key == KeyEvent.VK_LEFT && !left){

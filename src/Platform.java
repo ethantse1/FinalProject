@@ -4,6 +4,7 @@ public class Platform {
     private Rectangle r;
     private boolean kill;
     private boolean disappear;
+    int time;
     public Platform(int x, int y, int width, int height, boolean k){
         r = new Rectangle(x,y,width,height);
         kill = k;
@@ -13,11 +14,18 @@ public class Platform {
         r = new Rectangle(x,y,width,height);
         kill = k;
         disappear = dis;
+        time = 0;
 
     }
     public Rectangle getR(){
 
         return r;
+    }
+    public void addTime(){
+        time++;
+    }
+    public int getTime(){
+        return time;
     }
     public void drawR(Graphics2D g2){
         //Color a = new Color(255,204,51);
