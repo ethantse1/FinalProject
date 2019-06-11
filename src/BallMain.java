@@ -88,12 +88,12 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         }
         if (level == 6) {
             plat.add(new Platform(960,450,40,50,false,false,true));
-            plat.add(new Platform(0,500,150,100,false));
-            plat.add(new Platform(150,520,850,100,true));
-            plat.add(new Platform(850,500,150,100,false));
+            plat.add(new Platform(0,480,150,120,false));
+            plat.add(new Platform(150,520,750,100,true));
+            plat.add(new Platform(850,480,150,120,false));
             //150 - 850
             for (int i = 155; i <= 795; i+=64) {
-                plat.add(new Platform(i,480,50,20,false,true));
+                plat.add(new Platform(i,480,50,30,false,true));
             }
         }
         if (level == 7) {
@@ -102,15 +102,42 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(550, 200, 40, 1000, false));
             plat.add(new Platform(700,150,40,30,false,true));
             plat.add(new Platform(800,150,40,30,false,true));
-            plat.add(new Platform(900, 100, 40, 50, false, false, true));
-            plat.add(new Platform(900,150,40,20,false));
+            plat.add(new Platform(900, 100, 40, 30, false, false, true));
             plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
         }
         if (level == 8) {
-            plat.add(new Platform(500,300,40,40,false,false,false,false,true, 1));
-            plat.add(new Platform(900,300,40,40,false,false,false,false,true, 1));
+            //plat.add(new Platform(500,300,40,200,false,false,false,false,true));
+            //plat.add(new Platform(900,300,40,200,false,false,false,false,true));
+            plat.add(new Platform(200,450,40,50,false));
+            plat.add(new Platform(300,400,40,100,false));
+            plat.add(new Platform(450,300,40,200,false));
+            plat.add(new Platform(550,300,40,20,false));
+            plat.add(new Platform(700,450,40,40,false));
+            plat.add(new Platform(740,350,40,150,false));
+            plat.add(new Platform(740,310,40,40,false,false,true));
             plat.add(new Platform(0,500,1000,100,false,false,false,true));
+            plat.add(new Platform(490,499,250,101,true));
         }
+        if (level == 9) {
+            //teleport level
+            plat.add(new Platform(200,350,40,50,false,false,false,false,true,1));
+            plat.add(new Platform(700,350,40,50,false,false,false,false,true,1));
+            plat.add(new Platform(0,500,1000,100,false));
+
+        }
+        if (level == 10) {
+            plat.add(new Platform(960,450,40,50,false,false,true));
+            plat.add(new Platform(0,480,150,120,false));
+            plat.add(new Platform(150,520,750,100,true));
+            plat.add(new Platform(850,480,150,120,false));
+            //150 - 850
+            for (int i = 155; i <= 795; i+=64) {
+                plat.add(new Platform(i,480,50,30,false,true));
+            }
+            plat.add(new Platform(150,0,700,340,true));
+            plat.add(new Platform(150,340,700,17,false));
+        }
+        
 
     }
     public void paintComponent(Graphics g) {
@@ -135,7 +162,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             bb.moveY(-1);
             if (bb.getC().intersects(p.getR()) && p.isDisappear()){
                 p.addTime();
-                if (p.getTime()>10) {
+                if (p.getTime()>5) {
                     plat.remove(p);
                     break;
                 }
