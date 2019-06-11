@@ -37,7 +37,24 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
     }
     public void level(){
         plat.clear();
-        if (level == 1) {
+        if(level == 1){
+            plat.add(new Platform(250, 450,40,50,false));
+            plat.add(new Platform(350, 450,40,50,false));
+            plat.add(new Platform(450,400,40,100,false));
+            plat.add(new Platform(550,350,40,150,false));
+            plat.add(new Platform(700,350,40,150,false));
+            plat.add(new Platform(900,450,40,50,false,false,true));
+            plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
+
+        }
+        if(level == 2){
+            plat.add(new Platform(300,450,40,50,false));
+            plat.add(new Platform(400,400,40,100,false));
+            plat.add(new Platform(600,300,40,200,false));
+            plat.add(new Platform(800,200,40,50,false,false,true));
+            plat.add(new Platform(0,500,1000,100,false,false,false,true));
+        }
+        if (level == 3) {
             plat.add(new Platform(750, 150, 40, 1000, false));
             plat.add(new Platform(350, 300, 40, 1000, false));
             plat.add(new Platform(550, 200, 40, 1000, false));
@@ -53,22 +70,59 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(900,150,40,20,false));
            // plat.add(new Platform(790,500,1000,100,true));
         }
-        if (level == 2) {
-            plat.add(new Platform(0, 500, 1000, 100, false));
-            plat.add(new Platform(400, 500, 40, 1000, false));
-            plat.add(new Platform(700, 150, 40, 20, false, true));
-            plat.add(new Platform(800, 150, 40, 20, false, true));
+        if (level == 4) {
+            plat.add(new Platform(750, 200, 40, 1000, true));
+            plat.add(new Platform(350, 300, 40, 1000, false));
+            plat.add(new Platform(550, 200, 40, 1000, false));
+            plat.add(new Platform(900,450,40,50,false,false,true));
+            plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
+        }
+        if (level == 5) {
+            plat.add(new Platform(350, 300, 40, 1000, false));
+            plat.add(new Platform(550, 200, 40, 1000, false));
+            plat.add(new Platform(900, 100, 40, 50, false, false, true));
+            plat.add(new Platform(900,150,40,20,false));
+            plat.add(new Platform(750,150,40,30,false,true));
+            plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
+        }
+        if (level == 6) {
+            plat.add(new Platform(960,450,40,50,false,false,true));
+            plat.add(new Platform(0,500,150,100,false));
+            plat.add(new Platform(150,520,850,100,true));
+            plat.add(new Platform(850,500,150,100,false));
+            //150 - 850
+            for (int i = 155; i <= 795; i+=64) {
+                plat.add(new Platform(i,480,50,20,false,true));
+            }
+        }
+        if (level == 7) {
+            plat.add(new Platform(750, 150, 40, 1000, true));
+            plat.add(new Platform(350, 300, 40, 1000, false));
+            plat.add(new Platform(550, 200, 40, 1000, false));
+            plat.add(new Platform(700,150,40,30,false,true));
+            plat.add(new Platform(800,150,40,30,false,true));
+            plat.add(new Platform(900, 100, 40, 50, false, false, true));
+            plat.add(new Platform(900,150,40,20,false));
+            plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
+        }
+        if (level == 8) {
+            plat.add(new Platform(500,300,40,200,false,false,false,false,true));
+            plat.add(new Platform(900,300,40,200,false,false,false,false,true));
+            plat.add(new Platform(0,500,1000,100,false,false,false,true));
         }
 
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        //window.setTitle("Time survived: " + counter/23 + "           " + "Score: " + score + "           " + "Lives Left: " + lives);
+
 
         bb.drawB(g2);
         for (Platform p: plat){
             p.drawR(g2);
         }
+
     }
     public void actionPerformed(ActionEvent e) {
         bb.moveY(-gravity);
@@ -172,6 +226,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             if (p.getR().getBounds2D().contains(bl) || p.getR().getBounds2D().contains(tl)) {
                 touchL = true;
             }
+
             if (bb.getC().intersects(p.getR()) && p.isDisappear()){
                 plat.remove(p);
                 repaint();
@@ -184,6 +239,13 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
                 repaint();
                 break;
             }
+
+            if (bb.getC().intersects(p.getR()) && p.isTeleport()){
+                bb.getLoc().setLocation(p.getX(),p.getY());
+                repaint();
+                break;
+            }
+
             tl.translate(0,-2);
             tr.translate(0,-2);
             bl.translate(0,1);
@@ -287,7 +349,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         }else{
             if (touchB){
                 jumps = 2;
-                System.out.println(jumps);
+                //System.out.println(jumps);
             }
         }
         if(key == KeyEvent.VK_LEFT && !left){
@@ -295,6 +357,18 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         }
         if(key == KeyEvent.VK_R){
             bb.spawn();
+            level();
+            //lives--;
+        }
+        if(key == KeyEvent.VK_N){
+            bb.spawn();
+            level++;
+            level();
+            //lives--;
+        }
+        if(key == KeyEvent.VK_B){
+            bb.spawn();
+            level--;
             level();
             //lives--;
         }
@@ -320,12 +394,14 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             right = false;
         }
     }
+
+
     public static void main(String[] args) {
         JFrame window = new JFrame("Platformer!");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setBounds(0, 0, FRAMEWIDTH, FRAMEHEIGHT + 22);
 
-        JPanel panel = new BallMain();
+        BallMain panel = new BallMain();
         panel.setSize(FRAMEWIDTH, FRAMEHEIGHT);
 
         panel.setFocusable(true);
