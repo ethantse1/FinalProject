@@ -171,12 +171,20 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         for(Platform p: plat){
             if (p.getKill() && p.getR().getBounds2D().intersects(bb.getC())){
                 bb.spawn();
+                level();
+                break;
+            }
+            if (p.isGoal() && p.getR().getBounds2D().intersects(bb.getC())){
+                level++;
+                bb.spawn();
+                level();
+                break;
             }
         }
         for (i = 0; i < 3;) {
             for(Platform p: plat){
                 if (bb.getLoc().x-i<0 || p.getR().contains(new Point(bb.getLoc().x-i, bb.getLoc().y + bb.getRadius()-1)) || p.getR().contains(new Point(bb.getLoc().x-i, bb.getLoc().y+1))){
-                    if (p.getKill()){
+                    if (p.getKill()|| p.isGoal()){
                         i++;
                     }
                     touchL = true;
@@ -194,7 +202,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         for (j = 0; j < 3;) {
             for (Platform p : plat) {
                 if (bb.getLoc().x + bb.getRadius() + j > getWidth() || p.getR().contains(new Point(bb.getLoc().x + bb.getRadius() + j, bb.getLoc().y + bb.getRadius() - 1)) || p.getR().contains(new Point(bb.getLoc().x + bb.getRadius() + j, bb.getLoc().y + 1))) {
-                    if (p.getKill()){
+                    if (p.getKill() || p.isGoal()){
                         j++;
                     }
                     touchR = true;
@@ -224,7 +232,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         bl.translate(1,0);
         br.translate(-1,0);
         for (Platform p: plat){
-            if ((p.getR().getBounds2D().contains(br) || p.getR().getBounds2D().contains(bl)) && !p.getKill()){
+            if ((p.getR().getBounds2D().contains(br) || p.getR().getBounds2D().contains(bl)) && !p.getKill() && !p.isGoal()){
                 gravity = 0;
                 jumped = false;
                 jumps = 2;
@@ -400,9 +408,13 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             level();
             //lives--;
         }
-        if(key == KeyEvent.VK_B){
+        if(key == KeyEvent.VK_B) {
             bb.spawn();
             level--;
+        }
+        if(key == KeyEvent.VK_1){
+            level = 1;
+            bb.spawn();
             level();
             //lives--;
         }
