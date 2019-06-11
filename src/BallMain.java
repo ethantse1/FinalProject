@@ -79,6 +79,12 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
         }
         if (level == 5) {
+            plat.add(new Platform(400,150,40,500,false,true));
+            plat.add(new Platform(900,450,40,50,false,false,true));
+            plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
+
+        }
+        if (level == 6) {
             plat.add(new Platform(350, 300, 40, 1000, false));
             plat.add(new Platform(550, 200, 40, 1000, false));
             plat.add(new Platform(900, 100, 40, 50, false, false, true));
@@ -86,7 +92,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(750,150,40,30,false,true));
             plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
         }
-        if (level == 6) {
+        if (level == 7) {
             plat.add(new Platform(960,450,40,50,false,false,true));
             plat.add(new Platform(0,480,150,120,false));
             plat.add(new Platform(150,520,750,100,true));
@@ -96,7 +102,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
                 plat.add(new Platform(i,480,50,30,false,true));
             }
         }
-        if (level == 7) {
+        if (level == 8) {
             plat.add(new Platform(750, 150, 40, 1000, true));
             plat.add(new Platform(350, 300, 40, 1000, false));
             plat.add(new Platform(550, 200, 40, 1000, false));
@@ -105,7 +111,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(900, 100, 40, 30, false, false, true));
             plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
         }
-        if (level == 8) {
+        if (level == 9) {
             //plat.add(new Platform(500,300,40,200,false,false,false,false,true));
             //plat.add(new Platform(900,300,40,200,false,false,false,false,true));
             plat.add(new Platform(200,450,40,50,false));
@@ -118,7 +124,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(0,500,1000,100,false,false,false,true));
             plat.add(new Platform(490,499,250,101,true));
         }
-        if (level == 9) {
+        if (level == 10) {
             //teleport level
             plat.add(new Platform(200,350,40,50,false,false,false,false,true,1));
             plat.add(new Platform(700,350,40,50,false,false,false,false,true,1));
@@ -129,7 +135,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
 
 
         }
-        if (level == 10) {
+        if (level == 11) {
             plat.add(new Platform(960,450,40,50,false,false,true));
             plat.add(new Platform(0,480,150,120,false));
             plat.add(new Platform(150,520,750,100,true));
@@ -165,6 +171,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
                 touchT = true;
             }
             bb.moveY(-1);
+            bb.moveX(1);
             if (bb.getC().intersects(p.getR()) && p.isDisappear()){
                 p.addTime();
                 if (p.getTime()>5) {
@@ -172,6 +179,16 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
                     break;
                 }
             }
+            bb.moveX(-2);
+
+            if (bb.getC().intersects(p.getR()) && p.isDisappear()){
+                p.addTime();
+                if (p.getTime()>5) {
+                    plat.remove(p);
+                    break;
+                }
+            }
+            bb.moveX(1);
             bb.moveY(1);
         }
         //System.out.println(touchT);
