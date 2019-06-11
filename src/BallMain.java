@@ -23,6 +23,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
     private int gravity = 0;
 
     private int jumping = 0;
+    private int level = 1;
     private ArrayList<Platform> plat;
 
     public static final int FRAMEWIDTH = 1000, FRAMEHEIGHT = 600;
@@ -33,24 +34,32 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         timer.start();
         addKeyListener(this);
         plat = new ArrayList<Platform>();
-        levelOne();
+        level();
     }
-    public void levelOne(){
+    public void level(){
         plat.clear();
-        plat.add(new Platform(0,550,1000,100, false));
-        plat.add(new Platform(0,400,300,40, false));
+        if (level == 1) {
+            plat.add(new Platform(750, 150, 40, 1000, false));
+            plat.add(new Platform(350, 300, 40, 1000, false));
+            plat.add(new Platform(550, 200, 40, 1000, false));
+            plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
+//        plat.add(new Platform(0,400,300,40, false));
 //        plat.add(new Platform(500,300,40,100, false));
 //        plat.add(new Platform(700,200,40,100, false));
 //        plat.add(new Platform(900,150,40,100, true));
-        plat.add(new Platform(850,150,40,30,false, true));
-        plat.add(new Platform(950,150,40,30,false,true));
 
 
-        plat.add(new Platform(500,300,40,1000, false));
-        plat.add(new Platform(700,200,40,1000, false));
-        plat.add(new Platform(900,150,40,1000, true));
 
-
+            plat.add(new Platform(900, 100, 40, 50, false, false, true));
+            plat.add(new Platform(900,150,40,20,false));
+           // plat.add(new Platform(790,500,1000,100,true));
+        }
+        if (level == 2) {
+            plat.add(new Platform(0, 500, 1000, 100, false));
+            plat.add(new Platform(400, 500, 40, 1000, false));
+            plat.add(new Platform(700, 150, 40, 20, false, true));
+            plat.add(new Platform(800, 150, 40, 20, false, true));
+        }
 
     }
     public void paintComponent(Graphics g) {
@@ -315,7 +324,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         if(key == KeyEvent.VK_UP && jumps>0 && !jumped){
             gravity = 0;
             jumped = true;
-            bb.moveY(2);
+            bb.moveY(1);
             touchB = false;
             jumping = 1;
             jumps--;
@@ -323,12 +332,19 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         }else{
             if (touchB){
                 jumps = 2;
+                System.out.println(jumps);
             }
         }
         if(key == KeyEvent.VK_LEFT && !left){
             left = true;
         }
-        if(key == KeyEvent.VK_RIGHT && !right){
+        if(key == KeyEvent.VK_R){
+            bb.spawn();
+            level();
+            //lives--;
+        }
+
+            if(key == KeyEvent.VK_RIGHT && !right){
             right = true;
         }
 //        if(key == KeyEvent.VK_LEFT && touchL){
