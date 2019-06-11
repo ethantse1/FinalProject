@@ -123,6 +123,10 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(200,350,40,50,false,false,false,false,true,1));
             plat.add(new Platform(700,350,40,50,false,false,false,false,true,1));
             plat.add(new Platform(0,500,1000,100,false));
+            plat.add(new Platform(240,499,460,101,true));
+            plat.add(new Platform(900,459,40,41,false,false,true));
+
+
 
         }
         if (level == 10) {
@@ -130,6 +134,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(0,480,150,120,false));
             plat.add(new Platform(150,520,750,100,true));
             plat.add(new Platform(850,480,150,120,false));
+
             //150 - 850
             for (int i = 155; i <= 795; i+=64) {
                 plat.add(new Platform(i,480,50,30,false,true));
