@@ -11,6 +11,7 @@ public class Platform {
     private boolean move;
     private boolean teleport;
     private int x,y;
+    private int linked = 0;
 
     public Platform(int x, int y, int width, int height, boolean k){
         this.x = x;
@@ -43,7 +44,7 @@ public class Platform {
         ground = suelo;
 
     }
-    public Platform(int x, int y, int width, int height, boolean k, boolean dis,boolean go,boolean suelo,boolean tele){
+    public Platform(int x, int y, int width, int height, boolean k, boolean dis,boolean go,boolean groundd,boolean tele, int link){
         r = new Rectangle(x,y,width,height);
         this.x = x;
         this.y = y;
@@ -51,9 +52,12 @@ public class Platform {
         disappear = dis;
         time = 0;
         goal = go;
-        ground = suelo;
+        ground = groundd;
         teleport = tele;
+        linked = link;
+
     }
+
 
     public int getX() {
         return x;
@@ -87,7 +91,7 @@ public class Platform {
         }else if (teleport) {
             g2.setColor(Color.BLUE.darker());
         }else{
-            g2.setColor(Color.BLACK);
+            g2.setColor(Color.GRAY.darker());
         }
 
         g2.fill(r);
@@ -118,6 +122,9 @@ public class Platform {
 
     public boolean isTeleport() {
         return teleport;
+    }
+    public int getLinked(){
+        return linked;
     }
 
     public Platform(int x, int y, int width, int height, int speed, int vx, boolean mo) {

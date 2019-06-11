@@ -107,8 +107,8 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
         }
         if (level == 8) {
-            //plat.add(new Platform(500,300,40,200,false,false,false,false,true));
-            //plat.add(new Platform(900,300,40,200,false,false,false,false,true));
+            plat.add(new Platform(500,300,40,40,false,false,false,false,true, 1));
+            plat.add(new Platform(900,300,40,40,false,false,false,false,true, 1));
             plat.add(new Platform(0,500,1000,100,false,false,false,true));
         }
 
@@ -184,7 +184,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         for (i = 0; i < 3;) {
             for(Platform p: plat){
                 if (bb.getLoc().x-i<0 || p.getR().contains(new Point(bb.getLoc().x-i, bb.getLoc().y + bb.getRadius()-1)) || p.getR().contains(new Point(bb.getLoc().x-i, bb.getLoc().y+1))){
-                    if (p.getKill()|| p.isGoal()){
+                    if (p.getKill()|| p.isGoal() || p.isTeleport()){
                         i++;
                     }
                     touchL = true;
@@ -202,7 +202,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         for (j = 0; j < 3;) {
             for (Platform p : plat) {
                 if (bb.getLoc().x + bb.getRadius() + j > getWidth() || p.getR().contains(new Point(bb.getLoc().x + bb.getRadius() + j, bb.getLoc().y + bb.getRadius() - 1)) || p.getR().contains(new Point(bb.getLoc().x + bb.getRadius() + j, bb.getLoc().y + 1))) {
-                    if (p.getKill() || p.isGoal()){
+                    if (p.getKill() || p.isGoal() || p.isTeleport()){
                         j++;
                     }
                     touchR = true;
@@ -270,12 +270,14 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
 ////
             for (int ii = 0; ii < jumpHeight - gravity; ii++) {
                 if (p.getR().getBounds2D().contains(new Point(bb.getLoc().x + 2, bb.getLoc().y + bb.getRadius() - 1)) || p.getR().getBounds2D().contains(new Point(bb.getLoc().x + bb.getRadius() - 2, bb.getLoc().y + bb.getRadius() - 1))) {
-                    bb.moveY(1);
 
-                    //System.out.println(i);
-                    jumps = 2;
-                    jumped = false;
-                    touchB = true;
+                    if (!p.isTeleport()) {
+                        bb.moveY(1);
+                        //System.out.println(i);
+                        jumps = 2;
+                        jumped = false;
+                        touchB = true;
+                    }
                 }
             }
 
@@ -365,6 +367,26 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             jumped = false;
             jumps = 2;
         }
+        int link = 0;
+        Platform pp = null;
+        for (Platform p: plat){
+            if (p.isTeleport() && p.getR().getBounds2D().intersects(bb.getC())){
+                pp = p;
+                link = p.getLinked();
+                break;
+            }
+        }
+        for (Platform p: plat){
+            if (link > 0 && p.isTeleport() && !p.getR().getBounds2D().intersects(bb.getC()) && !p.equals(pp) && p.getLinked() == link){
+
+                bb.setLocation(p.getX(), p.getY()+p.getR().height-1);
+                break;
+            }
+        }
+        for (Platform p: plat){
+
+        }
+
 //        System.out.println(jumps);
 //        System.out.println(jumped);
         //System.out.println(jumping);
@@ -411,6 +433,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         if(key == KeyEvent.VK_B) {
             bb.spawn();
             level--;
+            level();
         }
         if(key == KeyEvent.VK_1){
             level = 1;
