@@ -88,7 +88,11 @@ public class Platform {
     public void update() {
         int dx = (int) (Math.cos(Math.toRadians(dir)) * speed);
         int dy = -(int) (Math.sin(Math.toRadians(dir)) * speed);
-        loc.translate(dx, dy);
+        x += dx;
+        y += dy;
+    }
+    public void setDir(int dirr){
+        dir = dirr;
     }
     public Point getLoc() {
         return new Point(x,y);
@@ -102,9 +106,6 @@ public class Platform {
         return leftborder;
     }
 
-    public void setDir(int newDir) {
-        dir = newDir;
-    }
 
     public int getX() {
         return x;
@@ -158,34 +159,13 @@ public class Platform {
 
     }
 
-    public Rectangle getBoundingRectangle() {
-        Rectangle box = null;
-        if (picOrientation % 180 != 0)
-            if (facingEast() || facingWest())
-                box = new Rectangle(loc.x, loc.y, (int)r.getHeight(), 25);
-            else
-                box = new Rectangle(loc.x, loc.y, (int)r.getWidth(), 25);
-        else if (facingEast() || facingWest())
-            box = new Rectangle(loc.x, loc.y, (int)r.getWidth(), 25);
-        else
-            box = new Rectangle(loc.x, loc.y, (int)r.getHeight(), 25);
 
-        return box;
-
-    }
 
     public void setLoc(Point loc) {
         this.loc = loc;
     }
 
 
-    public boolean facingEast() {
-        return dir % 360 < 90 || dir % 360 > 270;
-    }
-
-    public boolean facingWest() {
-        return dir % 360 > 90 && dir % 360 < 270;
-    }
 
     public int getSpeed() {
         return speed;
