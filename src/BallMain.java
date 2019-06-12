@@ -38,6 +38,10 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
     }
     public void level(){
         plat.clear();
+        plat.add(new Platform(-10, 0,10,1000,false));
+        //plat.add(new Platform(getWidth(), 0,20,1000,false));
+
+
         if(level == 1){
             plat.add(new Platform(250, 450,40,50,false));
             plat.add(new Platform(350, 450,40,50,false));
@@ -98,7 +102,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(150,520,750,100,true));
             plat.add(new Platform(850,480,150,120,false));
             //150 - 850
-            for (int i = 155; i <= 795; i+=64) {
+            for (int i = 155; i <= 795; i+=64*3.1) {
                 plat.add(new Platform(i,480,50,30,false,true));
             }
         }
@@ -166,14 +170,18 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         tl.translate(1, 0);
         tr.translate(-1, 0);
 ////////
+        int iii = 0;
         for (Platform p: plat) {
+
             if (p.getR().getBounds2D().contains(tr) || p.getR().getBounds2D().contains(tl)) {
                 touchT = true;
             }
             bb.moveY(-1);
             bb.moveX(1);
-            if (bb.getC().intersects(p.getR()) && p.isDisappear()){
-                p.addTime();
+            if (bb.getC().intersects(p.getR()) && p.isDisappear() || p.isDisappear() && p.getDissapearing()){
+                plat.get(iii).addTime();
+                plat.get(iii).setDissapearing(true);
+
                 if (p.getTime()>5) {
                     plat.remove(p);
                     break;
@@ -182,7 +190,8 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             bb.moveX(-2);
 
             if (bb.getC().intersects(p.getR()) && p.isDisappear()){
-                p.addTime();
+                plat.get(iii).addTime();
+                plat.get(iii).setDissapearing(true);
                 if (p.getTime()>5) {
                     plat.remove(p);
                     break;
@@ -190,6 +199,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             }
             bb.moveX(1);
             bb.moveY(1);
+            iii++;
         }
         //System.out.println(touchT);
 
