@@ -228,4 +228,7 @@ public class Platform {
     public boolean isMove() {
         return move;
     }
+    public boolean getInvis(){
+        return invisible;
+    }
 }
