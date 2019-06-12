@@ -5,6 +5,7 @@ public class Platform {
     private Rectangle r;
     private boolean kill;
     private boolean disappear;
+    private boolean dissapearing;
     private boolean goal;
     private int time;
     private boolean ground;
@@ -116,6 +117,12 @@ public class Platform {
     public Rectangle getR(){
 
         return r;
+    }
+    public boolean getDissapearing(){
+        return dissapearing;
+    }
+    public void setDissapearing(boolean xxx){
+        dissapearing = xxx;
     }
     public void addTime(){
         time++;
