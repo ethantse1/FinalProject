@@ -26,7 +26,6 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
     private int jumping = 0;
     private int level = 1;
     private ArrayList<Platform> plat;
-
     public static final int FRAMEWIDTH = 1000, FRAMEHEIGHT = 600;
     public BallMain() {
         timer = new Timer(1000/60, this);
@@ -42,6 +41,9 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         plat.clear();
         plat.add(new Platform(-10, 0,10,1000,false));
         //plat.add(new Platform(getWidth(), 0,20,1000,false));
+        bb.setSpawn(50,300);
+        bb.spawn();
+
 
 
         if(level == 1){
@@ -218,6 +220,12 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
 //        if(level == 15){
 //            plat.add(new Platform(300,))
 //        }
+        if(level == 16) {
+            bb.setSpawn(getWidth()/2, 0);
+            bb.spawn();
+
+        }
+
 
     }
     public void paintComponent(Graphics g) {
