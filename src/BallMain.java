@@ -25,6 +25,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
     private int deaths;
     private int jumping = 0;
     private int level = 1;
+    private String name;
     private ArrayList<Platform> plat;
 
     public static final int FRAMEWIDTH = 1000, FRAMEHEIGHT = 600;
@@ -37,6 +38,15 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         plat = new ArrayList<Platform>();
         level();
         deaths = 0;
+        name = "PLATFORMER!";
+
+        JOptionPane.showMessageDialog(null,"D/Right = Right" +
+                        "\nA/Left = Left" +
+                        "\nW/Space/Up = Jump" +
+                        "\nR = Reset" +
+                        "\nN = Next Level" +
+                        "\nB = Previous Level",
+                "Controls", JOptionPane.INFORMATION_MESSAGE);
     }
     public void level(){
         plat.clear();
@@ -45,7 +55,6 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
 
 
         if(level == 1){
-            plat.add(new Platform(250, 450,40,50,false));
             plat.add(new Platform(350, 450,40,50,false));
             plat.add(new Platform(450,400,40,100,false));
             plat.add(new Platform(550,350,40,150,false));
@@ -55,6 +64,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
 
         }
         if(level == 2){
+            name = "Double Jump";
             plat.add(new Platform(300,450,40,50,false));
             plat.add(new Platform(400,400,40,100,false));
             plat.add(new Platform(600,300,40,200,false));
@@ -62,6 +72,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(0,500,1000,100,false,false,false,true));
         }
         if (level == 3) {
+            name = "I'm gonna start naming levels now";
             plat.add(new Platform(750, 150, 40, 1000, false));
             plat.add(new Platform(350, 300, 40, 1000, false));
             plat.add(new Platform(550, 200, 40, 1000, false));
@@ -78,6 +89,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
            // plat.add(new Platform(790,500,1000,100,true));
         }
         if (level == 4) {
+            name = "You see red, you're dead";
             plat.add(new Platform(750, 200, 40, 1000, true));
             plat.add(new Platform(350, 300, 40, 1000, false));
             plat.add(new Platform(550, 200, 40, 1000, false));
@@ -85,12 +97,18 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
         }
         if (level == 5) {
+            name = "You see yellow, you're mellow";
             plat.add(new Platform(400,150,40,500,false,true));
-            plat.add(new Platform(900,450,40,50,false,false,true));
-            plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
+            plat.add(new Platform(900,530,40,50,false,false,true));
+            plat.add(new Platform(0, 500, 700, 100, false,false,false,true));
+            plat.add(new Platform(800,500,200,30,false,false,false,true));
+            plat.add(new Platform(700,570,300,30,false,false,false,true));
+            plat.add(new Platform(700,500,100,30,false,true));
+            plat.add(new Platform(940,530,60,40,false,false,false,true));
 
         }
         if (level == 6) {
+            name = "Generic Level #36";
             plat.add(new Platform(350, 300, 40, 1000, false));
             plat.add(new Platform(550, 200, 40, 1000, false));
             plat.add(new Platform(900, 100, 40, 50, false, false, true));
@@ -99,16 +117,17 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
         }
         if (level == 7) {
+            name = "THE FLOOR IS LAVA!";
             plat.add(new Platform(960,450,40,50,false,false,true));
             plat.add(new Platform(0,480,150,120,false));
             plat.add(new Platform(150,520,750,100,true));
             plat.add(new Platform(850,480,150,120,false));
-            //150 - 850
             for (int i = 155; i <= 795; i+=64*3.1) {
                 plat.add(new Platform(i,480,50,30,false,true));
             }
         }
         if (level == 8) {
+            name = "Ketchup and Mustard";
             plat.add(new Platform(750, 150, 40, 1000, true));
             plat.add(new Platform(350, 300, 40, 1000, false));
             plat.add(new Platform(550, 200, 40, 1000, false));
@@ -118,6 +137,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(0, 500, 1000, 100, false,false,false,true));
         }
         if (level == 9) {
+            name = "Don't fire til you see the whites of their eyes";
             //plat.add(new Platform(500,300,40,200,false,false,false,false,true));
             //plat.add(new Platform(900,300,40,200,false,false,false,false,true));
             plat.add(new Platform(200,450,40,50,false));
@@ -131,6 +151,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(490,499,250,101,true));
         }
         if (level == 10) {
+            name = "Portal 2";
             //teleport level
             plat.add(new Platform(200,350,40,50,false,false,false,false,true,1));
             plat.add(new Platform(700,350,40,50,false,false,false,false,true,1));
@@ -142,17 +163,31 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
 
         }
         if (level == 11) {
+            name = "The Office Season 10";
             plat.add(new Platform(960,450,40,50,false,false,true));
             plat.add(new Platform(0,480,150,120,false));
-            plat.add(new Platform(150,520,750,100,true));
+            plat.add(new Platform(150,520,700,100,true));
+            plat.add(new Platform(150,560,700,40,false,false,false,true));
             plat.add(new Platform(850,480,150,120,false));
 
             //150 - 850
             for (int i = 155; i <= 795; i+=64) {
                 plat.add(new Platform(i,480,50,30,false,true));
             }
+            for (int i = 155; i <= 795; i+=64) {
+                plat.add(new Platform(i,340,50,30,false,true));
+            }
             plat.add(new Platform(150,0,700,340,true));
-            plat.add(new Platform(150,340,700,17,false));
+            plat.add(new Platform(150,0,700,300,false,false,false,true));
+            plat.add(new Platform(450,240,25,25,false,false,false,false,true,1));
+            plat.add(new Platform(525,240,25,25,false,false,false,false,true,1));
+
+            //150-850, width 700
+            plat.add(new Platform(225,130,125,80,false,false,false,false,true));
+            plat.add(new Platform(650,130,125,80,false,false,false,false,true));
+            plat.add(new Platform(250,150,75,40,false,false,false,false,true,1));
+            plat.add(new Platform(675,150,75,40,false,false,false,false,true,1));
+            //plat.add(new Platform(150,340,700,17,false));
         }
 //        if(level == 11){
 //            plat.add(new Platform(500,250,40,50,0,10,300,700,true));
@@ -160,6 +195,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
 //        }
 
         if(level == 12){
+             name = "You should have gone for the head";
             plat.add(new Platform(100,400,40,50,false,false,false,false,true,1));
             plat.add(new Platform(250,0,40,500,false));
             plat.add(new Platform(400,150,40,50,false,false,false,false,true,1));
@@ -171,6 +207,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(290,499,810,101,true));
         }
         if(level == 13){
+            name = "Hotel? Trivago";
             plat.add(new Platform(200,450,40,50,false));
             plat.add(new Platform(400,350,40,30,false,true));
             plat.add(new Platform(600,400,40,30,false,true));
@@ -182,6 +219,7 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(240,499,760,101,true));
         }
         if(level == 14){
+            name = "Dropper";
             plat.add(new Platform(200,0,40,500,false));
             plat.add(new Platform(160,450,40,50,false,false,false,false,true,1));
             plat.add(new Platform(600,0,40,50,false,false,false,false,true,1));
@@ -191,6 +229,9 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(240,499,760,101,false,false,true));
         }
         if(level == 15){
+            name = "More than Meets the Eye";
+            bb.setSpawn(50,300);
+            bb.spawn();
             plat.add(new Platform(0,400,150,200,false));
             plat.add(new Platform(0,400,850,30,false));
             plat.add(new Platform(960,350,40,50,false,false,false,true));
@@ -215,15 +256,87 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
             plat.add(new Platform(150,599,850,1,true));
             plat.add(new Platform(150,430,850,170,false,true));
         }
-//        if(level == 15){
-//            plat.add(new Platform(300,))
-//        }
-
+        if(level == 16){
+            name = "MERRY CHRISTMAS!";
+            bb.setSpawn(950,525);
+            bb.spawn();
+            //plat.add(new Platform(0,550,900,50,true));
+            for (int i = 50; i <= 900; i+=90) {
+                plat.add(new Platform(i,550,40,50,true));
+            }
+            for (int i = 0; i <= 900; i+=90) {
+                plat.add(new Platform(i,549,50,51,false,false,false,true));
+            }
+            //plat.add(new Platform(150,395,850,30,false));
+            for (int i = 200; i <=870; i+=90) {
+                plat.add(new Platform(i,395,40,30,true));
+            }
+            for (int i = 150; i <=910; i+=90) {
+                plat.add(new Platform(i,394,50,32,false,false,false,true));
+            }
+            plat.add(new Platform(870,394,130,32,false,false,false,true));
+            plat.add(new Platform(0,475,40,30,false,false,false,true));
+            plat.add(new Platform(0,435,40,40,false,false,true));
+            plat.add(new Platform(0,395,40,45,false,false,false,false,true,1));
+            plat.add(new Platform(40,395,40,110,false,false,false,true));
+            plat.add(new Platform(900,549,100,52,false,false,false,true));
+            plat.add(new Platform(880,80,120,30,false,false,false,false,true)); //860-100 = 760
+            for (int i = 340; i <= 860; i+=90) {
+                plat.add(new Platform(i,225,40,30,true));
+            }
+            for (int i = 290; i <= 860; i+=90) {
+                plat.add(new Platform(i,224,50,32,false,false,false,true));
+            }
+            plat.add(new Platform(150,50,620,30,false,false,false,true));
+            plat.add(new Platform(876,50,90,30,false,false,false,true));
+            plat.add(new Platform(870,50,40,206,false,false,false,true));
+            plat.add(new Platform(960,35,40,45,false,false,false,false,true,1));
+            plat.add(new Platform(0,549,50,52,false,false,false,true));
+            plat.add(new Platform(150,0,40,395,false,false,false,true));
+            //plat.add(new Platform(0,550,1000,50,false,false,false,true));
+        }
+        if(level == 17){
+            name = "The Last One";
+            bb.setSpawn(50,150);
+            bb.spawn();
+            plat.add(new Platform(0,270,960,30,false));
+            plat.add(new Platform(960,250,40,50,false,false,false,false,true,1));
+            plat.add(new Platform(850,300,150,30,false,true));
+            plat.add(new Platform(960,330,40,50,false,false,true));
+            plat.add(new Platform(920,330,40,50,false));
+            plat.add(new Platform(920,380,80,30,false));
+            plat.add(new Platform(920,50,40,220,false));
+            //plat.add(new Platform(780,50,140,30,true));
+            plat.add(new Platform(100,550,900,50,true));
+            plat.add(new Platform(240,240,680,30,true));
+            plat.add(new Platform(0,550,100,50,false,false,false,true));
+            plat.add(new Platform(0,300,40,50,false,false,false,false,true,1));
+            plat.add(new Platform(0,350,40,30,false,false,false,false,true));
+            plat.add(new Platform(40,350,660,30,false));
+            plat.add(new Platform(920,300,40,30,true));
+            plat.add(new Platform(200,220,40,50,false));
+            plat.add(new Platform(400,150,40,30,false,true));
+            plat.add(new Platform(600,100,40,30,false,true));
+            plat.add(new Platform(780,20,40,30,false,true));
+            plat.add(new Platform(150,500,40,30,false,true));
+            plat.add(new Platform(200,450,40,30,false,true));
+            plat.add(new Platform(250,500,40,30,false,true));
+            plat.add(new Platform(300,450,40,30,false,true));
+            plat.add(new Platform(400,500,40,30,false,true));
+            plat.add(new Platform(450,520,40,30,false));
+            plat.add(new Platform(500,500,40,30,false,true));
+            plat.add(new Platform(575,500,40,30,false,true));
+            plat.add(new Platform(650,500,40,30,false,true));
+            plat.add(new Platform(700,450,40,30,false,true));
+            plat.add(new Platform(750,500,40,30,false,true));
+            plat.add(new Platform(850,500,40,30,false,true));
+            plat.add(new Platform(775,400,40,30,false,true));
+        }
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        window.setTitle("Level: " + level + "                 PLATFORMER!" + "                 Deaths: " + deaths);
+        window.setTitle("Level: " + level + "                 " + name + "                 Deaths: " + deaths);
         bb.drawB(g2);
         for (Platform p: plat){
             p.drawR(g2);
@@ -569,11 +682,45 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
                 //System.out.println(jumps);
             }
         }
+        if(key == KeyEvent.VK_W && jumps>0 && !jumped){
+            gravity = 0;
+            jumped = true;
+            bb.moveY(1);
+            touchB = false;
+            jumping = 1;
+            jumps--;
+            jumpHeight = 17;
+            //System.out.println(jumps);
+        }else{
+            if (touchB){
+                jumps = 2;
+                //System.out.println(jumps);
+            }
+        }
+        if(key == KeyEvent.VK_SPACE && jumps>0 && !jumped){
+            gravity = 0;
+            jumped = true;
+            bb.moveY(1);
+            touchB = false;
+            jumping = 1;
+            jumps--;
+            jumpHeight = 17;
+            //System.out.println(jumps);
+        }else{
+            if (touchB){
+                jumps = 2;
+                //System.out.println(jumps);
+            }
+        }
         if(key == KeyEvent.VK_LEFT && !left){
+            left = true;
+        }
+        if(key == KeyEvent.VK_A && !left){
             left = true;
         }
         if(key == KeyEvent.VK_R){
             bb.spawn();
+            deaths++;
             level();
             //lives--;
         }
@@ -598,6 +745,9 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         if(key == KeyEvent.VK_RIGHT && !right){
             right = true;
         }
+        if(key == KeyEvent.VK_D && !right){
+            right = true;
+        }
 //        if(key == KeyEvent.VK_LEFT && touchL){
 //            bb.moveY(1);
 //        }
@@ -612,7 +762,13 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         if(key == KeyEvent.VK_LEFT && left){
             left = false;
         }
+        if(key == KeyEvent.VK_A && left){
+            left = false;
+        }
         if(key == KeyEvent.VK_RIGHT && right){
+            right = false;
+        }
+        if(key == KeyEvent.VK_D && right){
             right = false;
         }
     }
@@ -632,6 +788,6 @@ public class BallMain extends JPanel implements KeyListener, ActionListener{
         window.add(panel);
         window.setVisible(true);
         window.setResizable(false);
-        
+
     }
 }
